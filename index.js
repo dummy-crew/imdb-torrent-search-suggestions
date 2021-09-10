@@ -29,11 +29,19 @@
   };
 
   // return original title
-  const movieTitle = document
-    .querySelector('[data-testid="hero-title-block__original-title"]')
-    .innerText.split(": ")
-    .slice(1)
-    .join();
+  let movieTitle;
+
+  // get movie title
+  const isMovieTitle = () =>
+    document.querySelector('[data-testid="hero-title-block__original-title"]');
+
+  if (isMovieTitle()) {
+    movieTitle = isMovieTitle().innerText.split(": ").slice(1).join();
+  } else {
+    movieTitle = document.querySelector(
+      '[data-testid="hero-title-block__title"]'
+    ).innerText;
+  }
 
   const parsedTitle = encodeURIComponent(movieTitle);
 
