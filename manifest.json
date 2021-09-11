@@ -1,5 +1,5 @@
 {
-  "name": "IMDb Torrent Search Engine",
+  "name": "IMDb Torrent Search Suggestions",
   "description": "You see a title on IMDb that you like, search the major torrent providers!",
   "version": "0.1.0",
   "manifest_version": 3,
