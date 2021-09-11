@@ -58,6 +58,14 @@
       name: "serchinganx",
       url: `https://vkygil.github.io/serchinganx/index.html?q=${parsedTitle}`,
     },
+    {
+      name: "Kick A$$ torrs",
+      url: `https://katcr.to/usearch/${parsedTitle}`,
+    },
+    {
+      name: "The pirate Bay",
+      url: `https://tpb.one/search.php?q=${parsedTitle}`,
+    },
   ];
 
   providers.forEach((provider, index) => {
