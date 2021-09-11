@@ -1,5 +1,3 @@
-document.querySelector('.ipc-page-wrapper--base').style.backgroundColor = '#f50';
-
 (() => {
   function objectToCSS(obj) {
     let kebab = function (str) {
