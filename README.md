@@ -12,4 +12,4 @@
 Click on the above *Code* button to download the latest version of this script.
 Then, click download as a zip file.
 
-Go to the extensions page **( chrome://extensions/ )** and update the extension.
+Go to the extensions page **( chrome://extensions/ )** and upload the extension.
