@@ -1,4 +1,4 @@
-# IMDb Torrent Search Engine
+# IMDb Torrent Search Suggestions
 
 ## Available search engines
 - [RARBG](https://rarbg.to/torrents.php?search=)
