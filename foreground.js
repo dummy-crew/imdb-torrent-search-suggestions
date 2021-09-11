@@ -56,7 +56,7 @@
     },
     {
       name: "serchinganx",
-      url: `https://vkygil.github.io/serchinganx/index.html?q=${parsedTitle}`,
+      url: `https://serchinganx.vercel.app?q=${parsedTitle}`,
     },
     {
       name: "Kick A$$ torrs",
