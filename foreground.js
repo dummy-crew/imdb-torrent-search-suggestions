@@ -55,15 +55,15 @@
       url: `https://rarbg.to/torrents.php?search=${parsedTitle}`,
     },
     {
-      name: "serchinganx",
+      name: "Serchinganx (Torrent Paradise)",
       url: `https://vkygil.github.io/serchinganx/index.html?q=${parsedTitle}`,
     },
     {
-      name: "Kick A$$ torrs",
+      name: "KickassTorrents",
       url: `https://katcr.to/usearch/${parsedTitle}`,
     },
     {
-      name: "The pirate Bay",
+      name: "The Pirate Bay",
       url: `https://tpb.one/search.php?q=${parsedTitle}`,
     },
   ];
