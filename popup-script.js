@@ -7,7 +7,7 @@ chrome.storage.local.get("isEnabled", (data) => {
 switchToggle.addEventListener("change", (e) => {
   chrome.runtime.sendMessage(
     {
-      message: "set_enable",
+      message: "toggle_state",
       payload: e.target.checked,
     },
     (response) => {

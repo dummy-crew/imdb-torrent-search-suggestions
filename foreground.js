@@ -29,21 +29,21 @@
   };
 
   // return original title
-  let movieTitle;
+  let title;
 
   // get movie title
   const isMovieTitle = () =>
     document.querySelector('[data-testid="hero-title-block__original-title"]');
 
   if (isMovieTitle()) {
-    movieTitle = isMovieTitle().innerText.split(": ").slice(1).join();
+    title = isMovieTitle().innerText.split(": ").slice(1).join();
   } else {
-    movieTitle = document.querySelector(
+    title = document.querySelector(
       '[data-testid="hero-title-block__title"]'
     ).innerText;
   }
 
-  const parsedTitle = encodeURIComponent(movieTitle);
+  const parsedTitle = encodeURIComponent(title);
 
   const providers = [
     {

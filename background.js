@@ -3,7 +3,7 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.message === "set_enable") {
+  if (request.message === "toggle_state") {
     chrome.storage.local.set(
       {
         isEnabled: request.payload,
