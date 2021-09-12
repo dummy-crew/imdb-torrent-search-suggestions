@@ -1,8 +1,9 @@
 (() => {
+  let kebab = function (str) {
+    return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  };
+
   function objectToCSS(obj) {
-    let kebab = function (str) {
-      return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-    };
     let css = "";
     for (let key in obj) {
       css += kebab(key) + ":" + obj[key] + ";";
@@ -88,6 +89,7 @@
     const button = document.createElement("a");
     button.href = provider.url;
     button.target = "_blank";
+    button.setAttribute("data-provider", kebab(provider.name));
     button.innerText = provider.name;
     button.style = objectToCSS({
       ...styles.button,
