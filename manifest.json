@@ -10,10 +10,10 @@
     "default_popup": "popup.html"
   },
   "icons": {
-    "128": "./icons/icon128.png",
-    "48": "./icons/icon48.png",
-    "32": "./icons/icon32.png",
-    "16": "./icons/icon16.png"
+    "128": "icons/icon128.png",
+    "48": "icons/icon48.png",
+    "32": "icons/icon32.png",
+    "16": "icons/icon16.png"
   },
   "permissions": ["storage", "activeTab", "scripting", "tabs"],
   "host_permissions": ["https://www.imdb.com/*"]
