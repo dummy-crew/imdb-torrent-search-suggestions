@@ -28,10 +28,9 @@
     },
   };
 
-  // return original title
+  // get movie title
   let title;
 
-  // get movie title
   const isMovieTitle = () =>
     document.querySelector('[data-testid="hero-title-block__original-title"]');
 
@@ -67,6 +66,13 @@
       url: `https://tpb.one/search.php?q=${parsedTitle}`,
     },
   ];
+
+  if (isMovieTitle()) {
+    providers.push({
+      name: "YTS",
+      url: `https://yts.mx/browse-movies/${parsedTitle}`,
+    });
+  }
 
   providers.forEach((provider, index) => {
     const button = document.createElement("a");
