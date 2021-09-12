@@ -28,14 +28,24 @@
     },
   };
 
+  const isMovie =
+    document.querySelector('meta[property="og:type"]').content ===
+    "video.movie";
+
   // get movie title
   let title;
 
-  const isMovieTitle = () =>
-    document.querySelector('[data-testid="hero-title-block__original-title"]');
+  if (isMovie) {
+    const titleElement = document.querySelector(
+      '[data-testid="hero-title-block__original-title"]'
+    );
+    const targetElement =
+      titleElement ||
+      document.querySelector('[data-testid="hero-title-block__title"]');
 
-  if (isMovieTitle()) {
-    title = isMovieTitle().innerText.split(": ").slice(1).join();
+    if (targetElement.innerText.includes(":")) {
+      title = targetElement.innerText.split(":")[1].trim();
+    } else title = targetElement.innerText;
   } else {
     title = document.querySelector(
       '[data-testid="hero-title-block__title"]'
@@ -67,7 +77,7 @@
     },
   ];
 
-  if (isMovieTitle()) {
+  if (isMovie) {
     providers.push({
       name: "YTS",
       url: `https://yts.mx/browse-movies/${parsedTitle}`,
