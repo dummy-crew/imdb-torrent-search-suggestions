@@ -15,7 +15,6 @@
     "32": "./icons/icon32.png",
     "16": "./icons/icon16.png"
   },
-  "options_page": "options.html",
   "permissions": ["storage", "activeTab", "scripting", "tabs"],
   "host_permissions": ["https://www.imdb.com/*"]
 }
