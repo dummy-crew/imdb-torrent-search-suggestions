@@ -4,18 +4,6 @@ chrome.runtime.onInstalled.addListener((reason) => {
     chrome.storage.sync.set({
       switchHideElemData: {
         main: true,
-        Details: false,
-        DidYouKnow: false,
-        DynamicFeature_Episodes: false,
-        FAQ: false,
-        MoreLikeThis: false,
-        News: false,
-        Photos: false,
-        Storyline: false,
-        TechSpecs: false,
-        contribution: false,
-        'title-cast': false,
-        'videos-section': false,
       },
     });
   }

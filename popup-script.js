@@ -9,27 +9,87 @@ const hideElemList = document.getElementById('hideElemList');
 
 let switchHideElemData = {};
 
-const hideElemListArr = [
-  ['DidYouKnow', 'Did you Know'],
-  ['Storyline', 'Story Line'],
-  ['MoreLikeThis', 'More Like This'],
-  ['videos-section', 'videos section'],
-  ['Photos', 'Photos'],
-  ['DynamicFeature_Episodes', 'Epidodes'],
-  ['title-cast', 'Top Cast'],
-  ['FAQ', 'FAQ'],
-  ['Details', 'Details'],
-  ['TechSpecs', 'Technical Specifications'],
-  ['News', 'Related news'],
-  ['contribution', 'Contribute to this page'],
+const sections = [
+  {
+    title: 'Videos',
+    id: 'videos-section',
+  },
+  {
+    title: 'Photos',
+    id: 'Photos',
+  },
+  {
+    title: 'Top cast',
+    id: 'title-cast',
+  },
+  {
+    title: 'More like this',
+    id: 'MoreLikeThis',
+  },
+  {
+    title: 'Storyline',
+    id: 'Storyline',
+  },
+  {
+    title: 'Did you know',
+    id: 'DidYouKnow',
+  },
+  {
+    title: 'Episdoes',
+    id: 'DynamicFeature_Episodes',
+  },
+  {
+    title: 'User reviews',
+    id: 'UserReviews',
+  },
+  {
+    title: 'FAQ',
+    id: 'FAQ',
+  },
+  {
+    title: 'Details',
+    id: 'Details',
+  },
+  {
+    title: 'Box office',
+    id: 'BoxOffice',
+  },
+  {
+    title: 'Technical specs',
+    id: 'TechSpecs',
+  },
+  {
+    title: 'Related news',
+    id: 'News',
+  },
+  {
+    title: 'Contribute to this page',
+    id: 'contribution',
+  },
+  {
+    title: 'Editorial lists',
+    id: 'right-rail-content-block',
+  },
+  {
+    title: 'Editorial lists',
+    id: 'DynamicFeature_EditorialLists',
+  },
+  {
+    title: 'User lists',
+    id: 'DynamicFeature_UserLists',
+  },
+  {
+    title: 'User polls',
+    id: 'SidebarPolls',
+  },
 ];
 
 let html = '';
-hideElemListArr.forEach(function (el) {
+sections.forEach(function (el) {
   html += `
-    <label class="container">Hide ${el[1]}
-      <input class="hideElemListCB" data-testid="${el[0]}" type="checkbox">
-      <span class="checkmark"  ></span>
+    <label class="container">Hide ${el.title}
+      <input class="hideElemListCB" data-testid="${el.id}" type="checkbox">
+      <span class="checkmark"></span>
     </label>
     `;
 });
