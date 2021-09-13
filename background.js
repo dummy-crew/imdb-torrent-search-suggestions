@@ -1,12 +1,10 @@
-chrome.runtime.onInstalled.addListener((reason) => {
-  if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
-    chrome.storage.sync.set({ isEnabled: true });
-    chrome.storage.sync.set({
-      switchHideElemData: {
-        main: true,
-      },
-    });
-  }
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.storage.sync.set({ isEnabled: true });
+  chrome.storage.sync.set({
+    switchHideElemData: {
+      main: true,
+    },
+  });
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
