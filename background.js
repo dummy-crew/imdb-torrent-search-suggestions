@@ -1,5 +1,3 @@
-let currentTabId;
-
 chrome.runtime.onInstalled.addListener((reason) => {
   if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
     chrome.storage.sync.set({ isEnabled: true });
@@ -69,29 +67,38 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       }
     });
     chrome.storage.sync.get('switchHideElemData', handleHideElemData);
-    // set a global variable to the current tab id
-    currentTabId = tabId;
   }
 });
 
+function getTabId() {
+  return chrome.tabs.query({ active: true, currentWindow: true });
+}
+
 function handleHideElemData(data) {
   if (!Object.keys(data).length) return;
-  if (Object.keys(data.switchHideElemData).includes('main') && data.switchHideElemData.main) {
-    chrome.scripting
-      .executeScript({
-        target: { tabId: currentTabId },
-        func: handleElementToShow,
-        args: [data.switchHideElemData],
-      })
-      .catch((error) => console.error(error));
+  if (Object.keys(data.switchHideElemData).includes('main')) {
+    getTabId().then((tab) => {
+      if (Array.isArray(tab) && tab.length > 0) {
+        chrome.scripting
+          .executeScript({
+            target: { tabId: tab[0].id },
+            func: handleElementToShow,
+            args: [data.switchHideElemData],
+          })
+          .catch((error) => console.error(error));
+      }
+    });
   }
 }
 
 function handleElementToShow(elements) {
-  const existElement = (key) => document.querySelector(`[data-testid="${key}"]`);
-  Object.keys(elements).forEach((key) => {
-    if (existElement(key)) {
-      document.querySelector(`[data-testid="${key}"]`).style.display = elements[key] ? 'none' : 'block';
-    }
-  });
+  if (elements.main) {
+    const existElement = (key) => document.querySelector(`[data-testid="${key}"]`);
+    Object.keys(elements).forEach((key) => {
+      if (existElement(key)) {
+        const element = document.querySelector(`[data-testid="${key}"]`);
+        element.style.display = elements[key] ? 'none' : 'block';
+      }
+    });
+  }
 }

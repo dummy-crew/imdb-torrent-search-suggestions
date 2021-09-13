@@ -1,5 +1,7 @@
 .group {
   display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
 
 .text {
@@ -41,7 +43,7 @@
 
 .slider:before {
   position: absolute;
-  content: "";
+  content: '';
   height: 26px;
   width: 26px;
   left: 4px;
@@ -111,7 +113,7 @@ input:checked + .slider:before {
 
 /* Create the checkmark/indicator (hidden when not checked) */
 .checkmark:after {
-  content: "";
+  content: '';
   position: absolute;
   display: none;
 }
