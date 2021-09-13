@@ -1,6 +1,6 @@
 chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({ isEnabled: true });
-  chrome.storage.local.set({
+  chrome.storage.sync.set({ isEnabled: true });
+  chrome.storage.sync.set({
     switchHideElemData: {
       main: true,
       Details: false,
@@ -20,8 +20,9 @@ chrome.runtime.onInstalled.addListener(() => {
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  debugger
   if (request.message === "set_enable") {
-    chrome.storage.local.set(
+    chrome.storage.sync.set(
       {
         isEnabled: request.payload,
       },
@@ -33,10 +34,9 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         sendResponse({ message: "success" });
       }
     );
-    // return true;
   }
-  if (request.message === "setswitchHideElemData") {
-    chrome.storage.local.set(
+  if (request.message === "switchHideElemData") {
+    chrome.storage.sync.set(
       {
         switchHideElemData: request.payload,
       },
@@ -54,10 +54,10 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (
-    changeInfo.status === "complete" &&
+    changeInfo.status === "loading" &&
     /^https:\/\/www\.imdb\.com\/title\//.test(tab.url)
   ) {
-    chrome.storage.local.get("isEnabled", (data) => {
+    chrome.storage.sync.get("isEnabled", (data) => {
       if (data.isEnabled) {
         chrome.scripting
           .executeScript({
@@ -69,7 +69,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
       }
     });
 
-    chrome.storage.local.get("switchHideElemData", (data) => {
+    chrome.storage.sync.get("switchHideElemData", (data) => {
+      // if hide section is enabled
       if (data.switchHideElemData.main) {
         chrome.scripting
           .executeScript({
@@ -77,24 +78,50 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             func: hideSomeElements,
             args: [data.switchHideElemData],
           })
-          .then(() => console.log("Script executed: switchHideElemData"))
+          .then(() => {
+            console.log('ajajaja')
+          })
           .catch((error) => console.error(error));
       }
     });
   }
 });
+
+
+
 // run on val change without reload.. TODO
 function hideSomeElements(hideElemData) {
+  const existHTMLElement = (id) => document.querySelector(`[data-testid="${id}"]`)
   Object.keys(hideElemData).forEach((key) => {
-    console.log(key);
-    if (key !== "main") {
+    if (key !== "main" && existHTMLElement(key)) {
       if (hideElemData[key]) {
         document.querySelectorAll(`[data-testid="${key}"]`)[0].style.display =
           "none";
+        console.log("g63");
       } else {
         document.querySelectorAll(`[data-testid="${key}"]`)[0].style.display =
           "block";
+        console.log("g64");
       }
     }
   });
 }
+
+// chrome.storage.sync.set({ isEnabled: true });
+// chrome.storage.sync.set({
+//   switchHideElemData: {
+//     main: true,
+//     Details: false,
+//     DidYouKnow: false,
+//     DynamicFeature_Episodes: false,
+//     FAQ: false,
+//     MoreLikeThis: false,
+//     News: false,
+//     Photos: false,
+//     Storyline: false,
+//     TechSpecs: false,
+//     contribution: false,
+//     "title-cast": false,
+//     "videos-section": false,
+//   },
+// });

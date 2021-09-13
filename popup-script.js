@@ -3,13 +3,13 @@ const switchHideElem = document.getElementById("switchHideElem");
 const hideElemList = document.getElementById("hideElemList");
 
 //Un commnent for clearing data real quick
-// chrome.storage.local.clear(function (obj) {
+// chrome.storage.sync.clear(function (obj) {
 //   console.log("cleared");
 // });
 
 let switchHideElemData = {};
+
 const hideElemListArr = [
-  // [data-testid, Readable text]
   ["DidYouKnow", "Did you Know"],
   ["Storyline", "Story Line"],
   ["MoreLikeThis", "More Like This"],
@@ -36,34 +36,34 @@ let renderHideElemListArr = () => {
   });
   hideElemList.innerHTML = html;
 };
+
 renderHideElemListArr();
 
+// setup listener for every checkbox
 Array.from(document.getElementsByClassName("hideElemListCB")).forEach(function (
   element
 ) {
   element.addEventListener("change", (event) => {
+    console.log(event.currentTarget.checked);
     switchHideElemData[event.currentTarget.getAttribute("data-testid")] =
       event.currentTarget.checked;
-    setswitchHideElemData();
+      handleSwitchHideElemData();
   });
 });
 
-chrome.storage.local.get("isEnabled", (data) => {
+chrome.storage.sync.get("isEnabled", (data) => {
   switchToggle.checked = data.isEnabled;
 });
 
-chrome.storage.local.get("switchHideElemData", (data) => {
+chrome.storage.sync.get("switchHideElemData", (data) => {
   switchHideElemData = data.switchHideElemData;
-  console.log(JSON.stringify(switchHideElemData));
-  if (data.switchHideElemData)
+  if (data.switchHideElemData) {
     switchHideElem.checked = data.switchHideElemData.main;
+  }
   else switchHideElemData = {};
-
   Object.keys(switchHideElemData).forEach((key) => {
-    console.log(key);
     if (key !== "main") {
-      document.querySelectorAll(`[data-testid="${key}"]`)[0].checked =
-        switchHideElemData[key];
+      document.querySelector(`[data-testid="${key}"]`).checked = switchHideElemData[key];
     }
   });
 });
@@ -90,13 +90,13 @@ switchToggle.addEventListener("change", (e) => {
 //Main "Hide some elements" Switch
 switchHideElem.addEventListener("change", (e) => {
   switchHideElemData["main"] = e.target.checked;
-  setswitchHideElemData();
+  handleSwitchHideElemData();
 });
 
-function setswitchHideElemData() {
+function handleSwitchHideElemData() {
   chrome.runtime.sendMessage(
     {
-      message: "setswitchHideElemData",
+      message: "switchHideElemData",
       payload: switchHideElemData,
     },
     (response) => {
