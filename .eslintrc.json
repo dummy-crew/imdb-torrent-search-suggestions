@@ -1,3 +1,4 @@
 {
-  "extends": "eslint:recommended"
+  "extends": "eslint:recommended",
+  "plugins": ["prettier"]
 }

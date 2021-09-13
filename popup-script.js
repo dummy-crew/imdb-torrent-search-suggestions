@@ -1,8 +1,3 @@
-import style from "./style.css" assert { type: "css" };
-
-document.adoptedStyleSheets = [style];
-
-// const switchToggle = document.querySelector('input[type="checkbox"]');
 const switchToggle = document.getElementById("mainSwitch");
 const switchHideElem = document.getElementById("switchHideElem");
 const hideElemList = document.getElementById("hideElemList");
