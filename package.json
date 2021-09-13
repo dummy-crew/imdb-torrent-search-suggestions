@@ -1,0 +1,37 @@
+{
+  "name": "imdb-torrent-search-engine",
+  "version": "1.0.0",
+  "description": "- 1337x\r - RARBG\r - The Pirate Bay\r - Serchinganx (Torrent Paradise)\r - KickassTorrents",
+  "main": "background.js",
+  "scripts": {
+    "lint": "npx eslint **/*.js --format table"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dummy-crew/imdb-torrent-search-engine.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dummy-crew/imdb-torrent-search-engine/issues"
+  },
+  "homepage": "https://github.com/dummy-crew/imdb-torrent-search-engine#readme",
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "husky": "^7.0.2",
+    "lint-staged": "^11.1.2",
+    "prettier": "2.4.0"
+  }
+}
