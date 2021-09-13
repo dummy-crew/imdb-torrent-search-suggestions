@@ -2,16 +2,25 @@ chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({ isEnabled: true });
   chrome.storage.local.set({
     switchHideElemData: {
-      "main": true, "Details": false, "DidYouKnow": false,
-      "DynamicFeature_Episodes": false, "FAQ": false, "MoreLikeThis": false,
-      "News": false, "Photos": false, "Storyline": false, "TechSpecs": false,
-      "contribution": false, "title-cast": false, "videos-section": false
-    }
+      main: true,
+      Details: false,
+      DidYouKnow: false,
+      DynamicFeature_Episodes: false,
+      FAQ: false,
+      MoreLikeThis: false,
+      News: false,
+      Photos: false,
+      Storyline: false,
+      TechSpecs: false,
+      contribution: false,
+      "title-cast": false,
+      "videos-section": false,
+    },
   });
 });
 
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.message === "toggle_state") {
+  if (request.message === "set_enable") {
     chrome.storage.local.set(
       {
         isEnabled: request.payload,
@@ -27,7 +36,6 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
     // return true;
   }
   if (request.message === "setswitchHideElemData") {
-
     chrome.storage.local.set(
       {
         switchHideElemData: request.payload,
@@ -77,14 +85,15 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 });
 // run on val change without reload.. TODO
 function hideSomeElements(hideElemData) {
-  Object.keys(hideElemData).forEach(key => {
-
+  Object.keys(hideElemData).forEach((key) => {
     console.log(key);
     if (key !== "main") {
       if (hideElemData[key]) {
-        document.querySelectorAll(`[data-testid="${key}"]`)[0].style.display = "none"
+        document.querySelectorAll(`[data-testid="${key}"]`)[0].style.display =
+          "none";
       } else {
-        document.querySelectorAll(`[data-testid="${key}"]`)[0].style.display = "block"
+        document.querySelectorAll(`[data-testid="${key}"]`)[0].style.display =
+          "block";
       }
     }
   });

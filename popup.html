@@ -5,36 +5,37 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Popup</title>
+    <style>
+      @media (prefers-color-scheme: dark) {
+        body {
+          font-family: monospace;
+          background-color: #202124;
+          color: white;
+          min-width: 360px;
+        }
+      }
+    </style>
   </head>
+
   <body>
-  </div>
-  <hr>
-  <div class="group">
-    <label class="text">Hide some elements</label>
-    <label class="switch">
-      <input type="checkbox" id="switchHideElem" />
-      <span class="slider"></span>
-    </label>
-  </div>
-  <div id="hideElemList">
-    <!-- <label class="container">One
-      <input type="checkbox">
-      <span class="checkmark"></span>
-    </label>
-    <label class="container">Two
-      <input type="checkbox">
-      <span class="checkmark"></span>
-    </label>
-    <label class="container">Three
-      <input type="checkbox">
-      <span class="checkmark"></span>
-    </label>
-    <label class="container">Four
-      <input type="checkbox">
-      <span class="checkmark"></span>
-    </label> -->
-  </div>
+    <div class="group">
+      <label class="text">Enabled</label>
+      <label class="switch">
+        <input type="checkbox" id="mainSwitch" />
+        <span class="slider"></span>
+      </label>
+    </div>
+    
+    <div class="group">
+      <label class="text">Hide some elements</label>
+      <label class="switch">
+        <input type="checkbox" id="switchHideElem" />
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div id="hideElemList"></div>
+
     <script type="module" src="./popup-script.js"></script>
   </body>
 </html>
-
