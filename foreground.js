@@ -92,9 +92,7 @@
     button.target = '_blank';
     button.setAttribute('data-provider', kebab(provider.name));
     button.innerText = provider.name;
-    button.style = objectToCSS({
-      top: Number(styles.button.top.replace('px', '')) + index * 40 + 'px',
-    });
+    button.style.top = Number(styles.button.top.replace('px', '')) + index * 40 + 'px',
     shadow.appendChild(button);
   });
   if (!document.getElementById('imdb-torrent-search-engine')) {
