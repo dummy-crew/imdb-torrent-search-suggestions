@@ -1,3 +1,7 @@
+import style from "./style.css" assert { type: "css" };
+
+document.adoptedStyleSheets = [style];
+
 const switchToggle = document.querySelector('input[type="checkbox"]');
 
 function removeButtons() {
