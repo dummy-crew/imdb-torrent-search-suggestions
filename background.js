@@ -1,3 +1,5 @@
+let currentTabId;
+
 chrome.runtime.onInstalled.addListener((reason) => {
   if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
     chrome.storage.sync.set({ isEnabled: true });
@@ -47,7 +49,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           return;
         }
         sendResponse({ message: 'success' });
-        handleHideElemData({ data: request.payload });
+        handleHideElemData({ switchHideElemData: request.payload });
       },
     );
   }
@@ -63,19 +65,21 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             target: { tabId },
             files: ['./foreground.js'],
           })
-          .then(() => console.log('Script executed'))
           .catch((error) => console.error(error));
       }
     });
     chrome.storage.sync.get('switchHideElemData', handleHideElemData);
+    // set a global variable to the current tab id
+    currentTabId = tabId;
   }
 });
 
 function handleHideElemData(data) {
-  if (data.switchHideElemData.main) {
+  if (!Object.keys(data).length) return;
+  if (Object.keys(data.switchHideElemData).includes('main') && data.switchHideElemData.main) {
     chrome.scripting
       .executeScript({
-        target: { tabId },
+        target: { tabId: currentTabId },
         func: handleElementToShow,
         args: [data.switchHideElemData],
       })
@@ -87,7 +91,7 @@ function handleElementToShow(elements) {
   const existElement = (key) => document.querySelector(`[data-testid="${key}"]`);
   Object.keys(elements).forEach((key) => {
     if (existElement(key)) {
-      document.querySelector(`[data-testid="${key}"]`).style.display = !elements[key] ? 'none' : 'block';
+      document.querySelector(`[data-testid="${key}"]`).style.display = elements[key] ? 'none' : 'block';
     }
   });
 }
