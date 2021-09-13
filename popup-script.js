@@ -1,9 +1,12 @@
-// const switchToggle = document.querySelector('input[type="checkbox"]');
+import style from "./style.css" assert { type: "css" };
+
+document.adoptedStyleSheets = [style];
+
 const switchToggle = document.getElementById("mainSwitch");
 const switchHideElem = document.getElementById("switchHideElem");
 const hideElemList = document.getElementById("hideElemList");
 
-//Un commnent for clearing data real quick
+// Uncommnent for clearing data real quick
 // chrome.storage.local.clear(function (obj) {
 //   console.log("cleared");
 // });
@@ -40,7 +43,6 @@ let renderHideElemListArr = () => {
 renderHideElemListArr()
 
 Array.from(document.getElementsByClassName("hideElemListCB")).forEach(function (element) {
-
   element.addEventListener('change', (event) => {
     switchHideElemData[event.currentTarget.getAttribute("data-testid")] = event.currentTarget.checked
     setswitchHideElemData()
@@ -48,6 +50,11 @@ Array.from(document.getElementsByClassName("hideElemListCB")).forEach(function (
 });
 
 
+function removeButtons() {
+  document.querySelectorAll("a[data-provider]").forEach((button) => {
+    button.remove();
+  });
+}
 
 chrome.storage.local.get("isEnabled", (data) => {
   switchToggle.checked = data.isEnabled;
@@ -55,29 +62,31 @@ chrome.storage.local.get("isEnabled", (data) => {
 
 chrome.storage.local.get("switchHideElemData", (data) => {
   switchHideElemData = data.switchHideElemData
-  console.log(JSON.stringify(switchHideElemData));
   if (data.switchHideElemData)
+  {
     switchHideElem.checked = data.switchHideElemData.main;
-  else
+  }
+  else { 
     switchHideElemData = {}
-
-  Object.keys(switchHideElemData).forEach(key => {
-    console.log(key);
-    if (key !== "main") {
-      document.querySelectorAll(`[data-testid="${key}"]`)[0].checked = switchHideElemData[key]
-    }
-  });
+    Object.keys(switchHideElemData).forEach(key => {
+      console.log(key);
+      if (key !== "main") {
+        document.querySelectorAll(`[data-testid="${key}"]`)[0].checked = switchHideElemData[key]
+      }
+    });
+  }
 });
 
 //main Switch
 switchToggle.addEventListener("change", (e) => {
   chrome.runtime.sendMessage(
     {
-      message: "set_enable",
+      message: "toggle_state",
       payload: e.target.checked,
     },
     (response) => {
       if (response.message === "success") {
+        if (!e.target.checked) removeButtons();
         console.log("Successfully set enable to " + e.target.checked);
       } else {
         console.log(

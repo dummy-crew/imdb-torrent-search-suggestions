@@ -1,8 +1,9 @@
 (() => {
+  let kebab = function (str) {
+    return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  };
+
   function objectToCSS(obj) {
-    let kebab = function (str) {
-      return str.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
-    };
     let css = "";
     for (let key in obj) {
       css += kebab(key) + ":" + obj[key] + ";";
@@ -28,22 +29,31 @@
     },
   };
 
-  // return original title
-  let movieTitle;
+  const isMovie =
+    document.querySelector('meta[property="og:type"]').content ===
+    "video.movie";
 
   // get movie title
-  const isMovieTitle = () =>
-    document.querySelector('[data-testid="hero-title-block__original-title"]');
+  let title;
 
-  if (isMovieTitle()) {
-    movieTitle = isMovieTitle().innerText.split(": ").slice(1).join();
+  if (isMovie) {
+    const titleElement = document.querySelector(
+      '[data-testid="hero-title-block__original-title"]'
+    );
+    const targetElement =
+      titleElement ||
+      document.querySelector('[data-testid="hero-title-block__title"]');
+
+    if (targetElement.innerText.includes(":")) {
+      title = targetElement.innerText.split(":")[1].trim();
+    } else title = targetElement.innerText;
   } else {
-    movieTitle = document.querySelector(
+    title = document.querySelector(
       '[data-testid="hero-title-block__title"]'
     ).innerText;
   }
 
-  const parsedTitle = encodeURIComponent(movieTitle);
+  const parsedTitle = encodeURIComponent(title);
 
   const providers = [
     {
@@ -68,10 +78,18 @@
     },
   ];
 
+  if (isMovie) {
+    providers.push({
+      name: "YTS",
+      url: `https://yts.mx/browse-movies/${parsedTitle}`,
+    });
+  }
+
   providers.forEach((provider, index) => {
     const button = document.createElement("a");
     button.href = provider.url;
     button.target = "_blank";
+    button.setAttribute("data-provider", kebab(provider.name));
     button.innerText = provider.name;
     button.style = objectToCSS({
       ...styles.button,
